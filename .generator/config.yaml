@@ -1,7 +1,7 @@
 generatorName: go
 templateDir: ./.generator/templates
 outputDir: ./okta/v4
-gitUserId: okta
+gitUserId: unbiased-security
 gitRepoId: okta-sdk-golang
 versionName: v4
 additionalProperties:

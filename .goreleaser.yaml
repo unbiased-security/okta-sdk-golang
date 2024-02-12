@@ -3,7 +3,7 @@ builds:
     skip: true
 release:
   github:
-    owner: okta
+    owner: unbiased-security
     name: okta-sdk-golang
   draft: true
 changelog:
