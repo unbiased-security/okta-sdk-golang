@@ -12,7 +12,7 @@ on:
 
 jobs:
   prepareReleaseBranch:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, savvy-gha-gcp]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -42,8 +42,15 @@ jobs:
         with:
           node-version: 16.16.0
 
+      - name: Configure Artifactory registry
+        run: |
+          npm config set registry "https://sailpoint.jfrog.io/artifactory/api/npm/sp-npm-dev/"
+          printf '\n//sailpoint.jfrog.io/artifactory/api/npm/sp-npm-dev/:_authToken=${ARTIFACTORY_GITHUB_TOKEN}\n' >> "$(npm config get userconfig)"
+
       - name: Install openapi generator
         run: npm install @openapitools/openapi-generator-cli -g
+        env:
+          ARTIFACTORY_GITHUB_TOKEN: ${{ secrets.ARTIFACTORY_GITHUB_TOKEN }}
 
       - name: Set openapi generator version
         run: openapi-generator-cli version-manager set 7.0.1
